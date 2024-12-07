@@ -20,7 +20,7 @@
 	<meta property="og:description" content="An addictive puzzle game inspired by Tetris." />
 	<meta property="og:type" content="website" />
 	<meta property="og:author" content="https://www.facebook.com/hextris" />
-	<meta property="og:image" content="http://hextris.github.io/hextris/images/facebook-opengraph.png" />
+	<meta property="og:image" content="https://hextris-imgs-bucket.s3.us-east-1.amazonaws.com/facebook-opengraph.png" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
 	<meta property="twitter:card" content="summary" />
@@ -31,7 +31,7 @@
 	<meta property="twitter:domain" content="http://hextris.github.io" />
 	<meta property="twitter:title" content="Hextris" />
 	<meta property="twitter:description" content="An addictive puzzle game inspired by Tetris." />
-	<meta property="twitter:image:src" content="http://hextris.github.io/hextris/images/twitter-opengraph.png" />
+	<meta property="twitter:image:src" content="https://hextris-imgs-bucket.s3.us-east-1.amazonaws.com/twitter-opengraph.png" />
 	<meta property="twitter:image:width" content="512" />
 	<meta property="twitter:image:height" content="512" />
 	<meta property="twitter:app:id:iphone" content="id903769553">
@@ -183,14 +183,23 @@
 	<script>
 		document.getElementById("shareScoreButton").addEventListener("click", function (event) {
 			event.preventDefault(); // Prevent default <a> behavior
-			const score = 100;
+			const score = highscores[0];
+
+			// Ask the user to enter their name
+			const name = prompt("Please enter your name:");
+
+			// Check if the user canceled the prompt
+			if (!name) {
+				alert("Name is required to share the score.");
+				return;
+			}
 
 			fetch("/api/score", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ score: score }),
+				body: JSON.stringify({ name: name, score: score }),
 			})
 			.then(response => {
 				console.log("Raw response:", response);
