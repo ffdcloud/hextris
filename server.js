@@ -1,18 +1,20 @@
 const express = require('express');
 const path = require('path');
+const bodyParser = require("body-parser");
 
 const app = express();
 const PORT = 3000;
 
+// Middleware to parse JSON request bodies
+app.use(bodyParser.json());
+
 // Serve static files (HTML, CSS, JS) from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/api/score', (req, res) => {
-    res.json({ message: 'Your current scopre is 100' });
-
+app.post('/api/score', (req, res) => {
     const { score } = req.body;
     console.log(`Sharing score: ${score}`);
-    res.json({ message: `Score ${score} shared successfully!` });
+    res.json({ message: 'Success!' });
 });
 
 // Start the server
