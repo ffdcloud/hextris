@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql2/promise");
 
 const app = express();
-const PORT = 3000;
+const PORT = 80;
 
 // Middleware to parse JSON request bodies
 app.use(bodyParser.json());
